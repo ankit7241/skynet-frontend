@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { ArrowRight, Github, Twitter, Menu } from "lucide-react";
 import { ParallaxProvider, Parallax } from "react-scroll-parallax";
+import LoginPage from "./LoginPage";
 
 export default function Home() {
 	const [isConnecting, setIsConnecting] = useState(false);
@@ -13,7 +14,7 @@ export default function Home() {
 
 	useEffect(() => {
 		scrollYProgress.onChange((v) => {
-			controls.start({ opacity: 1 - v });
+			controls.start({ opacity: 2 - v });
 		});
 	}, [scrollYProgress, controls]);
 
@@ -42,10 +43,11 @@ export default function Home() {
 								<NavItem href="#about">About</NavItem>
 								<NavItem href="#demo">Demo</NavItem>
 								<li>
-									<ConnectButton
+									<LoginPage />
+									{/* <ConnectButton
 										onClick={handleConnect}
 										isConnecting={isConnecting}
-									/>
+									/> */}
 								</li>
 							</ul>
 						</nav>
@@ -117,7 +119,8 @@ function MobileMenu({ setIsMenuOpen, handleConnect, isConnecting }) {
 				<NavItem href="#features">Features</NavItem>
 				<NavItem href="#about">About</NavItem>
 				<NavItem href="#demo">Demo</NavItem>
-				<ConnectButton onClick={handleConnect} isConnecting={isConnecting} />
+				<LoginPage />
+				{/* <ConnectButton onClick={handleConnect} isConnecting={isConnecting} /> */}
 				<button
 					className="text-gray-300 hover:text-blue-400 transition-colors duration-300"
 					onClick={() => setIsMenuOpen(false)}
