@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { ArrowRight, Github, Twitter, Menu } from "lucide-react";
 import { ParallaxProvider, Parallax } from "react-scroll-parallax";
-import LoginPage from "./LoginPage";
+import LoginPage from "./components/LoginPage";
 
 export default function Home() {
 	const [isConnecting, setIsConnecting] = useState(false);
@@ -13,10 +13,9 @@ export default function Home() {
 	const { scrollYProgress } = useScroll();
 
 	useEffect(() => {
-		scrollYProgress.onChange((v) => {
-			controls.start({ opacity: 2 - v });
-		});
-	}, [scrollYProgress, controls]);
+		// Start the animation immediately when the component is mounted
+		controls.start({ opacity: 1, y: 0 });
+	}, [controls]);
 
 	const handleConnect = async () => {
 		setIsConnecting(true);
@@ -41,7 +40,6 @@ export default function Home() {
 							<ul className="flex space-x-6">
 								<NavItem href="#features">Features</NavItem>
 								<NavItem href="#about">About</NavItem>
-								<NavItem href="#demo">Demo</NavItem>
 								<li>
 									<LoginPage />
 									{/* <ConnectButton

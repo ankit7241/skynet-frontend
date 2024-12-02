@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { OktoContextType, useOkto } from "okto-sdk-react";
 import { GoogleLogin } from "@react-oauth/google";
-import Avatar from "./components/Avatar";
+import Avatar from "./Avatar";
 
 const LoginPage = () => {
 	const { authenticate, getWallets, createWallet, getUserDetails } =
@@ -39,6 +39,7 @@ const LoginPage = () => {
 	async function handleCreateWallet() {
 		try {
 			const result = await createWallet();
+			console.log(result);
 			const polygonAddress =
 				result.wallets[0].address.slice(0, 4) +
 				"..." +
