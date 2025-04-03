@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { OktoContextType, useOkto } from "okto-sdk-react";
 import { GoogleLogin } from "@react-oauth/google";
 import Avatar from "./Avatar";
+declare global {
+	interface Window {
+		Telegram: any; // Add Telegram object to the global window object
+	}
+}
 
 const LoginPage = () => {
 	const { authenticate, getWallets, createWallet, getUserDetails } =
@@ -49,8 +54,32 @@ const LoginPage = () => {
 				"..." +
 				result.wallets[1].address.slice(-4); // Replace with actual address for Aptos
 			setWallets({ polygon: polygonAddress, aptos: aptosAddress });
+			// await openTelegramMiniApp();
 		} catch (error) {
 			console.error("Error creating wallet:", error);
+			// await openTelegramMiniApp();
+		}
+	}
+
+	async function openTelegramMiniApp() {
+		if (window.Telegram && window.Telegram.WebApp) {
+			// If inside the Telegram app (either mobile or web view)
+			console.log("Inside Telegram WebApp.");
+
+			// Opening the mini app inside the Telegram environment
+			window.Telegram.WebApp.open(); // Opens the WebApp URL as per the BotFather's settings
+		} else {
+			console.error("Telegram WebApp API is not available.");
+
+			// Optionally: Open the Telegram app (or web) in the browser
+			const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+			if (isMobile) {
+				// On mobile, deep-link to the bot
+				window.location.href = "tg://resolve?domain=skynetmanagerbot";
+			} else {
+				// On desktop, open Telegram Web
+				window.location.href = "https://web.telegram.org/a/";
+			}
 		}
 	}
 
